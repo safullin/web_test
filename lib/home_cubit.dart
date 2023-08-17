@@ -1,0 +1,34 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:multi_scanner/multi_pdt_scanner.dart';
+
+import 'home_state.dart';
+import 'main.dart';
+
+class HomeCubit extends Cubit<HomeState> implements MultiScannerDelegate {
+  HomeCubit() : super(const HomeState.loading());
+
+
+  final MultiScanner getAccountUseCase = getIt<MultiScanner>();
+
+  void initScanner(){
+    getAccountUseCase.addDelegate(this);
+  }
+
+  @override
+  bool? onScanEvent(String payload) {
+    emit(HomeState.onScan(barcode: payload));
+  }
+
+  @override
+  bool? onErrorScan(Exception error) {
+    // TODO: implement onErrorScan
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> close() {
+    getAccountUseCase.removeDelegate(this);
+    return super.close();
+  }
+
+}
