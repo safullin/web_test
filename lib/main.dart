@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:multi_scanner/multi_pdt_scanner.dart';
 import 'package:web_test/home_state.dart';
+import 'package:web_test/native.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:ui' as ui;
 import 'home_cubit.dart';
@@ -60,8 +61,6 @@ class _MyWebViewState extends State<MyWebView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Flutter Simple Example')),
-      body: WebViewWidget(controller: controller),
       floatingActionButton: FloatingActionButton(onPressed: () {
         NativeChannel.sendStringToNative('Hello from Flutter!');
       }),
@@ -70,12 +69,6 @@ class _MyWebViewState extends State<MyWebView> {
           builder: (BuildContext context, HomeState state) {
         return WebViewWidget(controller: controller);
       }),
-      floatingActionButton: ElevatedButton(
-        onPressed: () {
-          sendKeyEvent();
-        },
-        child: Text('Generate Key Event'),
-      ),
     );
   }
 }
