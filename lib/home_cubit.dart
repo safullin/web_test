@@ -3,6 +3,7 @@ import 'package:multi_scanner/multi_pdt_scanner.dart';
 
 import 'home_state.dart';
 import 'main.dart';
+import 'native.dart';
 
 class HomeCubit extends Cubit<HomeState> implements MultiScannerDelegate {
   HomeCubit() : super(const HomeState.loading());
@@ -16,7 +17,7 @@ class HomeCubit extends Cubit<HomeState> implements MultiScannerDelegate {
 
   @override
   bool? onScanEvent(String payload) {
-    emit(HomeState.onScan(barcode: payload));
+    NativeChannel.sendStringToNative(payload);
   }
 
   @override

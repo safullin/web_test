@@ -61,9 +61,6 @@ class _MyWebViewState extends State<MyWebView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        NativeChannel.sendStringToNative('1');
-      }),
       appBar: AppBar(title: const Text('Тестовый проект')),
       body: BlocBuilder<HomeCubit, HomeState>(
           builder: (BuildContext context, HomeState state) {
