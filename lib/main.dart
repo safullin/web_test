@@ -1,10 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:multi_scanner/multi_pdt_scanner.dart';
 import 'package:web_test/home_state.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
+import 'dart:ui' as ui;
 import 'home_cubit.dart';
 
 GetIt getIt = GetIt.instance;
@@ -21,15 +24,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Webview Example',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: BlocProvider(
-        create: (_) => HomeCubit()..initScanner(),
-        child: const MyWebView(),
-      ),
-    );
+        title: 'Webview Example',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: BlocProvider(
+          create: (_) => HomeCubit()..initScanner(),
+          child: const MyWebView(),
+        ));
   }
 }
 
@@ -52,23 +54,28 @@ class _MyWebViewState extends State<MyWebView> {
         onPageStarted: (String url) {},
         onPageFinished: (String url) {},
         onWebResourceError: (WebResourceError error) {},
-        onNavigationRequest: (NavigationRequest request) {
-          if (request.url.startsWith('https://www.youtube.com/')) {
-            return NavigationDecision.prevent;
-          }
-          return NavigationDecision.navigate;
-        },
       ),
     )
-    ..loadRequest(Uri.parse('https://www.youtube.com/'));
+    ..loadRequest(Uri.parse('http://10.5.29.126:8085/?termnum=3'));
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Тестовый проект')),
-        body: BlocBuilder<HomeCubit, HomeState>(
-            builder: (BuildContext context, HomeState state) {
-          return WebViewWidget(controller: controller);
-        }));
+      appBar: AppBar(title: const Text('Тестовый проект')),
+      body: BlocBuilder<HomeCubit, HomeState>(
+          builder: (BuildContext context, HomeState state) {
+        return WebViewWidget(controller: controller);
+      }),
+      floatingActionButton: ElevatedButton(
+        onPressed: () {
+          sendKeyEvent();
+        },
+        child: Text('Generate Key Event'),
+      ),
+    );
+  }
+
+  void sendKeyEvent() {
+
   }
 }
