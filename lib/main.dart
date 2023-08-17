@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:multi_scanner/multi_pdt_scanner.dart';
+import 'package:web_test/home_state.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-void main() => runApp(const MyApp());
+import 'home_cubit.dart';
+
+GetIt getIt = GetIt.instance;
+
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  getIt.registerSingleton<MultiScanner>(MultiScanner.last());
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -13,7 +25,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyWebView(),
+      home: BlocProvider(
+        create: (_) => HomeCubit()..initScanner(),
+        child: const MyWebView(),
+      ),
     );
   }
 }
@@ -50,8 +65,10 @@ class _MyWebViewState extends State<MyWebView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Flutter Simple Example')),
-      body: WebViewWidget(controller: controller),
-    );
+        appBar: AppBar(title: const Text('Тестовый проект')),
+        body: BlocBuilder<HomeCubit, HomeState>(
+            builder: (BuildContext context, HomeState state) {
+          return WebViewWidget(controller: controller);
+        }));
   }
 }
