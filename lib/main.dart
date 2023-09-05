@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:multi_scanner/multi_pdt_scanner.dart';
+import 'package:multi_scanner/multi_scanner.dart';
 import 'package:web_test/home_state.dart';
 import 'package:web_test/native.dart';
 import 'package:webview_flutter/webview_flutter.dart';

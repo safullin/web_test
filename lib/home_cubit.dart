@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:multi_scanner/multi_pdt_scanner.dart';
+import 'package:multi_scanner/multi_scanner.dart';
 
 import 'home_state.dart';
 import 'main.dart';
